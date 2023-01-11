@@ -32,8 +32,8 @@ resource "aws_autoscaling_group" "nomad_client" {
   name               = "${var.stack_name}-nomad_client"
   availability_zones = var.availability_zones
   desired_capacity   = var.client_count
-  min_size           = 0
-  max_size           = 10
+  min_size           = 1
+  max_size           = 100
   depends_on         = [aws_instance.nomad_server]
   load_balancers     = [aws_elb.nomad_client.name]
 

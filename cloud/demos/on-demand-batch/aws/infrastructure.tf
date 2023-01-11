@@ -74,8 +74,9 @@ module "clients_batch" {
   depends_on = [null_resource.preflight_check]
 
   nomad_datacenter   = "batch_workers"
-  desired_capacity   = 0
-  max_size = 50
+  min_size = 1
+  desired_capacity   = 1
+  max_size = 100
   stack_name         = random_pet.stack_name.id
   ami_id             = module.image.id
   key_name           = var.key_name

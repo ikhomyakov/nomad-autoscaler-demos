@@ -3,15 +3,12 @@ job "batch" {
   type        = "batch"
 
   parameterized {
-    meta_optional = ["kind", "prefix", "tile", "band", "catalog"]
+    meta_optional = ["tile", "band"]
   }
 
   meta {
-    kind = "s2"
-    prefix = "s3://constellr-product-segment/sentinel-s2-l2a-zarrs/"
-    tile = "16TEL"
-    band = "B1"
-    catalog = "s3://constellr-product-segment/sentinel-s2-l2a-zarrs/catalogs/16TEL.cat"
+    tile = "16TDK"
+    band = "AOT"
   }
 
   group "batch" {
@@ -19,28 +16,32 @@ job "batch" {
       driver = "docker"
 
       config {
-        image   = "public.ecr.aws/n8p1o0d8/hdsa:0.2.0"
+        image   = "public.ecr.aws/n8p1o0d8/hdsa:0.6.1"
         command = "/bin/bash"
         args    = ["${NOMAD_TASK_DIR}/batch.sh"]
       }
 
       template {
         data = <<EOF
-#!/usr/bin/env bash
-echo prefix=${NOMAD_META_prefix}
-echo tile=${NOMAD_META_tile}
-echo band=${NOMAD_META_band}
-echo catalog=${NOMAD_META_catalog}
+#!/bin/bash
+set -e
+echo "Start"
+eval "$('/conda/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+echo tile=${NOMAD_META_tile} band=${NOMAD_META_band}
+cd /scripts
 pwd
-ls -l
+curl https://icanhazip.com/
+echo "Work"
+#bash -e s2zarr.sh "${NOMAD_META_tile}" "${NOMAD_META_band}"
+bash -e l2zarr.sh "${NOMAD_META_tile}" "${NOMAD_META_band}"
 echo "Done"
         EOF
         destination = "local/batch.sh"
       }
 
       resources {
-        cpu    = 500
-        memory = 1000
+        cpu = 3000
+        memory = 7000
       }
     }
   }

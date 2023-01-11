@@ -44,7 +44,7 @@ variable "desired_capacity" {
 
 variable "instance_type" {
   type        = string
-  default     = "t2.small"
+  default     = "t3.large"
   description = "EC2 instance type to use for new instances."
 }
 

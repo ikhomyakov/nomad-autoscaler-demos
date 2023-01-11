@@ -60,8 +60,8 @@ EOF
         data = <<EOF
 scaling "batch" {
   enabled = true
-  min     = 0
-  max     = 50
+  min     = 1
+  max     = 100
 
   policy {
     cooldown            = "1m"

@@ -75,6 +75,7 @@ module "clients_batch" {
 
   nomad_datacenter   = "batch_workers"
   desired_capacity   = 0
+  max_size = 50
   stack_name         = random_pet.stack_name.id
   ami_id             = module.image.id
   key_name           = var.key_name

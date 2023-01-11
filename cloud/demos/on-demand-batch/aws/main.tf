@@ -48,7 +48,7 @@ resource "nomad_job" "autoscaler" {
   jobspec = templatefile(
     "${path.module}/jobs/autoscaler.nomad.tpl",
     {
-      aws_region   = var.region,
+     aws_region   = var.region,
       aws_asg_name = module.clients_batch.asg_name,
     }
   )

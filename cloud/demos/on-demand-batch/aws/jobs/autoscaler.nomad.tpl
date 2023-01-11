@@ -61,7 +61,7 @@ EOF
 scaling "batch" {
   enabled = true
   min     = 0
-  max     = 5
+  max     = 50
 
   policy {
     cooldown            = "1m"

@@ -17,6 +17,7 @@ resource "nomad_job" "batch" {
   jobspec = file("${path.module}/jobs/batch.nomad")
 }
 
+
 resource "nomad_job" "grafana" {
   depends_on = [null_resource.wait_for_nomad_api]
 

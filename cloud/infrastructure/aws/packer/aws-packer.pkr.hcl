@@ -56,4 +56,5 @@ build {
   provisioner "shell" {
     script = "../../shared/packer/scripts/setup.sh"
   }
+
 }
